@@ -1,10 +1,14 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
+import CtaBand from '../components/CtaBand.astro';
 
 const principles = [
-  ['Ownership beats trading.', 'We create value by owning good businesses for decades.'],
-  ['Survival comes first.', 'We never take a risk that could harm a business we own.'],
+  [
+    'Ownership over trading.',
+    'We aim to create value by owning good businesses for decades, not by buying and selling them.',
+  ],
+  ['Survival comes first.', 'We do not take risks that could endanger a business we own.'],
   ['Our word is our asset.', 'We do what we say, in writing and on time.'],
   ['People make businesses.', 'We back the managers and teams who run them.'],
 ];
@@ -13,30 +17,30 @@ const team = [
   {
     name: 'Harman Salgotra',
     role: 'Founder & Managing Director',
-    text: "Leads Salgotra Capital's strategy, acquisitions and relationships with owners and partners.",
+    text: 'Acquisitions, owner and advisor relationships.',
   },
   {
     name: 'Deepanshu Singh',
     role: 'Co-Founder & Director',
-    text: 'Works alongside Harman across deal research, decisions and administration.',
+    text: 'Research, administration and compliance.',
   },
 ];
 ---
 
 <Base
   title="Built to last | About Salgotra Capital"
-  description="Salgotra Capital is a holding company based in Jammu & Kashmir. We buy established businesses across India and own them permanently."
+  description="Salgotra Capital is a new holding company based in Jammu & Kashmir, buying its first businesses now, anywhere in India, to own them permanently."
 >
   <PageHead
     eyebrow="About"
     title="Built to last."
-    intro="Salgotra Capital is a holding company based in Jammu & Kashmir. We buy established businesses across India and own them permanently. As the group grows, the businesses we own will help us back early-stage founders with patient capital and practical support."
+    intro="Salgotra Capital is a new holding company based in Jammu & Kashmir. We are buying our first businesses now, anywhere in India, and we intend to own every business we buy permanently."
     texture="ear"
   />
 
-  <section class="section on-light grain" aria-labelledby="think-title">
+  <section class="section on-light grain grain--both" aria-labelledby="think-title">
     <div class="container">
-      <div class="reveal">
+      <div class="reveal section-head">
         <span class="eyebrow">Our principles</span>
         <h2 id="think-title">How we think</h2>
       </div>
@@ -58,8 +62,8 @@ const team = [
 
   <section class="section bg-midnight hairline-top" aria-labelledby="team-title">
     <div class="container">
-      <div class="reveal">
-        <h2 id="team-title" class="eyebrow team-label">Team</h2>
+      <div class="reveal section-head">
+        <h2 id="team-title">Team</h2>
       </div>
       <ul class="team" role="list">
         {
@@ -67,31 +71,59 @@ const team = [
             <li class="team__person reveal">
               <h3>{p.name}</h3>
               <p class="team__role">{p.role}</p>
-              <p>{p.text}</p>
+              <p class="team__text">{p.text}</p>
             </li>
           ))
         }
       </ul>
-      <div class="review measure reveal">
-        <hr class="rule rule--burgundy" />
+      <p class="team__note reveal">Both directors are involved in every acquisition decision.</p>
+    </div>
+  </section>
+
+  <section class="section on-light" aria-labelledby="check-title">
+    <div class="container">
+      <div class="measure center reveal stack">
+        <h2 id="check-title">How we check every purchase</h2>
         <p>
-          Every acquisition is reviewed by experienced chartered accountants and corporate lawyers, with an operator
-          from the industry.
+          We do not complete a purchase until independent chartered accountants and lawyers have checked it. Where
+          the industry is unfamiliar to us, we also ask an experienced operator from that industry to review it.
         </p>
       </div>
     </div>
   </section>
+
+  <section class="section bg-moss" aria-labelledby="ahead-title">
+    <div class="container">
+      <div class="measure center ahead reveal">
+        <h2 id="ahead-title">Looking further ahead</h2>
+        <hr class="rule rule--burgundy center" />
+        <p class="ahead__lead">
+          As the group grows, we plan to use part of its surplus to back early-stage Indian founders, with patient
+          capital and the practical help of established businesses.
+        </p>
+        <p class="ahead__note">
+          This money only comes from what is left after every business we own has what it needs to run and grow.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand line="If you would like to know more about us, we would be glad to talk." />
 </Base>
 
 <style>
+  .section-head {
+    text-align: center;
+  }
+
+  /* ---------- How we think ---------- */
   .think {
     list-style: none;
     padding: 0;
     margin-top: clamp(2.5rem, 5vw, 3.5rem);
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
     gap: 0 clamp(2rem, 5vw, 4.5rem);
-    max-width: 56rem;
   }
   .think__item {
     padding: 1.6rem 0 2rem;
@@ -116,21 +148,19 @@ const team = [
     color: var(--ink-soft);
   }
 
-  .team-label {
-    font-size: 1rem;
-    line-height: 1.6;
-  }
+  /* ---------- Team ---------- */
   .team {
     list-style: none;
     padding: 0;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
     gap: 2.5rem clamp(2rem, 6vw, 5rem);
-    margin-top: 0.75rem;
+    margin-top: clamp(2rem, 4vw, 3rem);
   }
   .team__person {
     border-top: 1px solid color-mix(in srgb, var(--champagne) 35%, transparent);
     padding-top: 1.5rem;
+    text-align: center;
   }
   .team__person h3 {
     font-size: clamp(1.7rem, 1.5rem + 0.7vw, 2.1rem);
@@ -138,19 +168,36 @@ const team = [
   .team__role {
     font-style: italic;
     color: var(--champagne);
-    margin: 0.3rem 0 0.9rem;
+    margin: 0.3rem 0 0.6rem;
   }
-  .team__person p:last-child {
-    color: var(--ivory-soft);
-    max-width: 30rem;
+  .team__text {
+    color: var(--ivory);
   }
-  .review {
-    margin-top: clamp(3rem, 6vw, 4.5rem);
-  }
-  .review .rule {
-    margin-top: 0;
-  }
-  .review p {
+  .team__note {
+    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+    text-align: center;
     font-size: 1.15em;
+  }
+
+  /* ---------- Looking further ahead ---------- */
+  .ahead {
+    text-align: center;
+  }
+  .ahead .rule {
+    margin-block: 1.5rem 1.75rem;
+  }
+  .ahead__lead {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-style: italic;
+    font-size: clamp(1.5rem, 1.25rem + 1vw, 2rem);
+    line-height: 1.35;
+    color: var(--ivory);
+    text-wrap: balance;
+  }
+  .ahead__note {
+    margin-top: 1.25rem;
+    color: var(--ivory);
+    font-size: 1.1em;
   }
 </style>
