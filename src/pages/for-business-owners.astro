@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
+import CtaBand from '../components/CtaBand.astro';
 
 const steps = [
   {
@@ -9,15 +10,15 @@ const steps = [
   },
   {
     title: 'Getting to know the business.',
-    text: 'After a confidentiality agreement, we look at a short list of information, often supplied by your CA.',
+    text: 'After we both sign a confidentiality agreement, we ask for a short list of information, which your CA can often provide.',
   },
   {
     title: 'A written offer.',
-    text: 'We set out the price and how it will be paid, in plain language.',
+    text: 'We set out the price, and how and when it will be paid, in plain language.',
   },
   {
-    title: 'Careful checks.',
-    text: 'Our chartered accountants and lawyers confirm the details with you and your advisors.',
+    title: 'Independent checks.',
+    text: 'Independent chartered accountants and lawyers check the details with you and your advisors before anything is signed.',
   },
   {
     title: 'Completion and handover.',
@@ -35,35 +36,44 @@ const promises = [
 const questions = [
   {
     q: 'Do I have to sell everything at once?',
-    a: 'No. Some owners keep a share and stay involved. We discuss what suits you.',
+    a: 'No. You can keep a share and stay involved for a period. We will discuss what suits you.',
   },
   {
     q: 'Will my staff keep their jobs?',
-    a: 'Our intention is to keep the team. The people who built the business are why it works.',
+    a: 'Our plan is to keep the team. The people who built the business are why it works.',
+  },
+  {
+    q: 'How will I be paid?',
+    a: 'The offer sets out the full price and when each part is paid. Depending on the business, part may be paid at completion and part over an agreed period. Everything is written into the final agreement.',
   },
   {
     q: 'How long does it take?',
-    a: 'Usually several months from first conversation to completion, depending on the business.',
+    a: 'We expect several months from the first conversation to completion, depending on the business and how quickly information is available.',
   },
   {
     q: 'Who will run the business after I step back?',
-    a: "An experienced manager, chosen with your input, who has a stake in the business's success.",
+    a: "A capable manager, chosen with your input, whose pay is tied to the business doing well.",
+  },
+  {
+    q: 'Will anyone find out we are talking?',
+    a: 'Not from us. We sign a confidentiality agreement before you share anything sensitive, and we never contact your staff, customers or suppliers without your agreement.',
   },
 ];
 ---
 
 <Base
   title="A careful way to step back | Salgotra Capital"
-  description="Selling a business you built is one of the biggest decisions of your life. Salgotra Capital makes the process clear, unhurried and private."
+  description="Selling a business you built is one of the biggest decisions of your life. Salgotra Capital keeps the process clear, unhurried and private."
 >
   <PageHead
     eyebrow="For business owners"
     title="A careful way to step back."
-    intro="Selling a business you built is one of the biggest decisions of your life. We make the process clear, unhurried and private."
+    intro="Selling a business you built is one of the biggest decisions of your life. We keep the process clear, unhurried and private."
   />
 
   <section class="section on-light grain" aria-labelledby="how-title">
     <div class="container">
+      <div class="timeline-wrap">
       <div class="reveal">
         <span class="eyebrow">The process</span>
         <h2 id="how-title">How it works</h2>
@@ -72,7 +82,7 @@ const questions = [
         {
           steps.map((s, i) => (
             <li class="timeline__step reveal">
-              <span class="timeline__num" aria-hidden="true">
+              <span class="step-num timeline__num" aria-hidden="true">
                 {String(i + 1).padStart(2, '0')}
               </span>
               <div class="timeline__body">
@@ -86,6 +96,7 @@ const questions = [
           ))
         }
       </ol>
+      </div>
     </div>
   </section>
 
@@ -125,29 +136,30 @@ const questions = [
     </div>
   </section>
 
-  <section class="section bg-midnight cta-band" aria-labelledby="cta-title">
-    <div class="container reveal">
-      <h2 id="cta-title" class="visually-hidden">Start a confidential conversation</h2>
-      <a class="button" href="/contact/">Start a confidential conversation</a>
-    </div>
-  </section>
+  <CtaBand line="Whenever you are ready, the first step is simply a conversation." />
 </Base>
 
 <style>
   /* ---------- Timeline ---------- */
+  /* Centred column so the page is balanced on wide screens */
+  .timeline-wrap {
+    max-width: 46rem;
+    margin-inline: auto;
+  }
   .timeline {
     list-style: none;
     padding: 0;
     margin-top: clamp(2.5rem, 5vw, 3.5rem);
-    max-width: 46rem;
     position: relative;
+    container-type: inline-size;
   }
-  .timeline::before {
+  /* The thin vertical line joins each numeral to the next one */
+  .timeline__step:not(:last-child)::before {
     content: '';
     position: absolute;
     left: 1.6rem;
-    top: 0.75rem;
-    bottom: 2.5rem;
+    top: 3.2rem;
+    bottom: 0;
     width: 1px;
     background: color-mix(in srgb, var(--umber) 35%, transparent);
   }
@@ -161,20 +173,21 @@ const questions = [
   .timeline__step:last-child {
     padding-bottom: 0;
   }
+  /* With very large text on a narrow screen, put the numeral above its step */
+  @container (max-width: 17rem) {
+    .timeline__step {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+    .timeline__step:not(:last-child)::before {
+      display: none;
+    }
+    .timeline__body {
+      padding-top: 0;
+    }
+  }
   .timeline__num {
     position: relative;
-    display: grid;
-    place-items: center;
-    width: 3.2rem;
-    height: 3.2rem;
-    border: 1px solid var(--bronze);
-    border-radius: 50%;
-    background: var(--cream);
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 1.25rem;
-    color: var(--bronze);
-    font-variant-numeric: lining-nums;
   }
   .timeline__body {
     padding-top: 0.55rem;
@@ -279,5 +292,21 @@ const questions = [
   .faq__item p {
     padding: 0 2.5rem 1.5rem 0;
     color: var(--ink-soft);
+  }
+  /* Gentle open and close, once per tap; browsers without support simply open instantly */
+  @media (prefers-reduced-motion: no-preference) {
+    .faq {
+      interpolate-size: allow-keywords;
+    }
+    .faq__item::details-content {
+      block-size: 0;
+      overflow: hidden;
+      transition:
+        block-size 300ms var(--ease),
+        content-visibility 300ms allow-discrete;
+    }
+    .faq__item[open]::details-content {
+      block-size: auto;
+    }
   }
 </style>
