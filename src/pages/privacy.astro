@@ -1,0 +1,138 @@
+---
+/*
+ * DRAFT: to be reviewed by our lawyer before launch.
+ *
+ * Written in plain English with India's Digital Personal Data Protection Act, 2023 in mind.
+ * This note is a code comment only and does not appear on the live page.
+ * When you change the policy, update LAST_UPDATED below.
+ */
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { SITE } from '../site.config.mjs';
+
+const LAST_UPDATED = '20 November 2026';
+const email = SITE.privacyEmail;
+---
+
+<Base
+  title="Privacy policy | Salgotra Capital"
+  description="How Salgotra Capital handles the details you share through this website, in plain English."
+>
+  <PageHead eyebrow="Privacy" title="Privacy policy" intro={`Last updated ${LAST_UPDATED}.`} />
+
+  <section class="section on-light">
+    <div class="container">
+      <article class="policy measure">
+        <p>
+          This policy explains, in plain English, how Salgotra Capital ("we", "us") handles personal data that you
+          share through this website. We follow India's Digital Personal Data Protection Act, 2023. For that law, we
+          are the "Data Fiduciary" for the details you send us.
+        </p>
+
+        <h2>What we collect</h2>
+        <p>We only collect what you choose to give us through the contact form:</p>
+        <ul>
+          <li>your name and email address (required);</li>
+          <li>your business name, city and phone number (optional);</li>
+          <li>anything you write about your business (optional);</li>
+          <li>your agreement that we may use these details to reply to you.</li>
+        </ul>
+        <p>
+          We do not use advertising or tracking cookies, and we do not build profiles of visitors. Like any website,
+          our hosting provider keeps basic technical logs (such as IP address and browser type) for a short time to
+          keep the site secure and working.
+        </p>
+
+        <h2>Why we collect it</h2>
+        <p>
+          We use your details only to respond to your enquiry and, if you wish, to continue the conversation you
+          started. We do not use them for marketing, and we do not add you to a mailing list.
+        </p>
+
+        <h2>Your consent</h2>
+        <p>
+          We process your details because you agree to it when you tick the consent box on the form. You can withdraw
+          your consent at any time by emailing <a href={`mailto:${email}`}>{email}</a>. Withdrawing consent does not
+          affect anything we did lawfully before you withdrew it, but we will stop using your details and delete them,
+          unless the law requires us to keep them.
+        </p>
+
+        <h2>Who we share it with</h2>
+        <p>
+          We do not sell your details, and we do not share them with anyone else, except the service providers that
+          run this website and its contact form (our website host and form service). They act only on our
+          instructions, may store data on servers outside India, and may not use your details for their own purposes.
+          We may also disclose details if the law requires it.
+        </p>
+        <p>
+          If our conversation develops and you want us to involve our chartered accountants or lawyers, we will only
+          do so with your knowledge and under a duty of confidentiality.
+        </p>
+
+        <h2>How long we keep it</h2>
+        <p>
+          We keep enquiry details for as long as we are in conversation with you, and for up to 24 months after our
+          last contact, so that we have a record if you return to us. After that we delete them. If you ask us to
+          delete your details sooner, we will, unless the law requires us to keep them.
+        </p>
+
+        <h2>How we protect it</h2>
+        <p>
+          The site is served over an encrypted connection (HTTPS). Access to enquiries is limited to our directors. We
+          take reasonable care to prevent loss, misuse or unauthorised access, and if a personal data breach affects
+          you, we will tell you and the Data Protection Board of India as the law requires.
+        </p>
+
+        <h2>Your rights</h2>
+        <p>You may ask us at any time to:</p>
+        <ul>
+          <li>tell you what personal data we hold about you and how we use it;</li>
+          <li>correct, complete or update your details;</li>
+          <li>delete your details;</li>
+          <li>name another person to exercise these rights for you in the event of death or incapacity.</li>
+        </ul>
+        <p>
+          To make any of these requests, or to raise a concern, email <a href={`mailto:${email}`}>{email}</a>. We
+          will reply as soon as we can, and in any case within 30 days. If you are not satisfied with our response,
+          you may complain to the Data Protection Board of India.
+        </p>
+
+        <h2>Children</h2>
+        <p>This website is meant for business owners and their advisors. We do not knowingly collect data from children.</p>
+
+        <h2>Changes to this policy</h2>
+        <p>If we change this policy, we will update it on this page and change the date at the top.</p>
+
+        <h2>Contact</h2>
+        <p>
+          Salgotra Capital, {SITE.location}.<br />
+          Email: <a href={`mailto:${email}`}>{email}</a>
+        </p>
+      </article>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .policy h2 {
+    font-size: clamp(1.6rem, 1.4rem + 0.7vw, 2rem);
+    color: var(--ink);
+    margin: 2.75rem 0 0.9rem;
+    padding-top: 2rem;
+    border-top: 1px solid color-mix(in srgb, var(--umber) 22%, transparent);
+  }
+  .policy p + p,
+  .policy ul + p,
+  .policy p + ul {
+    margin-top: 1em;
+  }
+  .policy ul {
+    padding-left: 1.25rem;
+  }
+  .policy li + li {
+    margin-top: 0.4em;
+  }
+  .policy li::marker {
+    color: var(--bronze);
+  }
+</style>
