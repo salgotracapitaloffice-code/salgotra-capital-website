@@ -1,3 +1,23 @@
+/* The rupee sign: EB Garamond's main (latin) subset lacks U+20B9, so the browser
+   used to fall back to another font. These two tiny files hold only that glyph,
+   cut from EB Garamond's latin-ext subset, so ₹ matches the text around it. */
+@font-face {
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/eb-garamond-rupee-400.woff2') format('woff2');
+  unicode-range: U+20B9;
+}
+@font-face {
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/eb-garamond-rupee-500.woff2') format('woff2');
+  unicode-range: U+20B9;
+}
+
 /* Salgotra Capital: global styles
    One fixed theme. Dark sections (Midnight, Moss, Onyx) alternate with Cream sections.
    Every text/background pair below is checked to WCAG AA (see README). */
@@ -17,7 +37,7 @@
   --bronze: #6b573e;
   /* Secondary text */
   --ivory-soft: #bdb497; /* on Midnight 7.8:1, on Moss 6.6:1 */
-  --ink-soft: #3d3a33; /* on Cream 8.8:1 */
+  --ink-soft: #2e2b25; /* on Cream 11.3:1 */
 
   --font-display: 'Cormorant Garamond', 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
   --font-body: 'EB Garamond', 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
@@ -25,11 +45,16 @@
   --measure: 42.5rem; /* ~680px reading width */
   --wide: 68.75rem; /* ~1100px layout width */
   --gutter: clamp(1.25rem, 4vw, 2.5rem);
-  --space-section: clamp(4rem, 9vw, 7.5rem);
+  /* One vertical rhythm for every section: 64px on phones, 96px on larger screens */
+  --space-section: 4rem;
 
   --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
   --fast: 180ms;
-
+}
+@media (min-width: 48rem) {
+  :root {
+    --space-section: 6rem;
+  }
 }
 
 /* ---------- Reset ---------- */
@@ -48,6 +73,11 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scroll-padding-top: 6rem;
+}
+/* Mobile menu open: the page behind does not scroll */
+html.menu-open,
+html.menu-open body {
+  overflow: hidden;
 }
 @media (prefers-reduced-motion: no-preference) {
   html {
@@ -84,13 +114,16 @@ select {
   font: inherit;
   color: inherit;
 }
+/* Very long words wrap rather than run off-screen, even with the phone's largest text setting */
 p,
 li,
 dd,
+dt,
+label,
 h1,
 h2,
 h3 {
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
 }
 
 /* ---------- Type ---------- */
@@ -230,24 +263,31 @@ a:active {
   background: #c9bd97;
   border-color: #c9bd97;
 }
-.button--quiet {
-  background: transparent;
-  color: var(--champagne);
+
+/* Secondary text link with an arrow: underline appears on hover and focus */
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  min-height: 2.75rem;
+  font-weight: 500;
+  text-decoration-color: transparent;
 }
-.button--quiet:hover {
-  background: transparent;
-  color: var(--ivory);
-  border-color: var(--ivory);
+.text-link:hover,
+.text-link:focus-visible {
+  text-decoration-color: currentColor;
 }
 .on-light .button {
+  color: var(--ink);
+}
+.on-light .button:hover {
   background: var(--midnight);
   border-color: var(--midnight);
   color: var(--ivory);
 }
-.on-light .button:hover {
-  background: var(--burgundy);
-  border-color: var(--burgundy);
-  color: var(--cream);
+.on-light .button:active {
+  background: var(--umber);
+  border-color: var(--umber);
 }
 .button[disabled] {
   cursor: progress;
@@ -268,9 +308,6 @@ a:active {
 .section {
   position: relative;
   padding-block: var(--space-section);
-}
-.section--tight {
-  padding-block: clamp(3rem, 6vw, 5rem);
 }
 .stack > * + * {
   margin-top: 1.25em;
@@ -300,6 +337,20 @@ a:active {
 .on-light {
   background: var(--cream);
   color: var(--ink);
+  /* Larger text for older readers: 18px on phones, 20px on larger screens */
+  font-size: 1.125rem;
+}
+@media (min-width: 48rem) {
+  .bg-cream,
+  .on-light {
+    font-size: 1.25rem;
+  }
+}
+/* Keep reading lines to roughly 60-72 characters */
+.on-light p,
+.on-light li,
+.on-light dd {
+  max-width: 34em;
 }
 
 /* Hairline rules, like a printed annual report */
@@ -325,6 +376,29 @@ a:active {
   border-top-color: color-mix(in srgb, var(--umber) 22%, transparent);
 }
 
+/* Step numerals in a thin circle, shared by the full timeline and the short version on Home */
+.step-num {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 3.2rem;
+  height: 3.2rem;
+  border: 1px solid var(--bronze);
+  border-radius: 50%;
+  background: var(--cream);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: var(--bronze);
+  font-variant-numeric: lining-nums;
+}
+.step-num--dark {
+  border-color: var(--champagne);
+  background: transparent;
+  color: var(--champagne);
+}
+
 /* ---------- Grain texture (growth rings) ----------
    A cleaned trace of grain.jpg in Umber, shown at very low opacity.
    The mask keeps the lines to the edges so text never sits on them. */
@@ -341,10 +415,10 @@ a:active {
   background-image: url('/images/grain-lines.webp');
   background-repeat: repeat-y;
   background-size: min(46rem, 90%) auto;
-  background-position: 108% 0;
-  opacity: 0.1;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 52%, #000 82%);
-  mask-image: linear-gradient(90deg, transparent 0%, transparent 52%, #000 82%);
+  background-position: 112% 0;
+  opacity: 0.07;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 66%, #000 96%);
+  mask-image: linear-gradient(90deg, transparent 0%, transparent 66%, #000 96%);
 }
 .grain--left::before {
   background-position: -8% 30%;
@@ -355,34 +429,18 @@ a:active {
   background-repeat: no-repeat, no-repeat;
   background-size: 34rem auto, 34rem auto;
   background-position: calc(100% + 16rem) -6rem, -16rem 60%;
-  opacity: 0.09;
-  -webkit-mask-image: linear-gradient(90deg, #000 0%, transparent 24%, transparent 76%, #000 100%);
-  mask-image: linear-gradient(90deg, #000 0%, transparent 24%, transparent 76%, #000 100%);
+  opacity: 0.07;
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, transparent 14%, transparent 86%, #000 100%);
+  mask-image: linear-gradient(90deg, #000 0%, transparent 14%, transparent 86%, #000 100%);
 }
 @media (max-width: 47.99rem) {
   .grain::before {
     background-size: 30rem auto;
-    background-position: calc(100% + 18rem) 0;
-    opacity: 0.08;
-    -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 70%, #000 100%);
-    mask-image: linear-gradient(90deg, transparent 0%, transparent 70%, #000 100%);
+    background-position: calc(100% + 20rem) 0;
+    opacity: 0.06;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 80%, #000 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, transparent 80%, #000 100%);
   }
-}
-
-/* A thin decorative band of growth rings between major sections */
-.grain-band {
-  height: 3.5rem;
-  background-color: var(--cream);
-  background-image: url('/images/grain-lines.webp');
-  background-size: 40rem auto;
-  background-position: center 38%;
-  position: relative;
-}
-.grain-band::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: color-mix(in srgb, var(--cream) 88%, transparent);
 }
 
 /* ---------- Reveal on scroll (only when JS is running) ---------- */
@@ -403,28 +461,16 @@ a:active {
 /* ---------- Page header for inner pages ---------- */
 .page-head {
   position: relative;
-  padding-block: clamp(4rem, 9vw, 7rem) clamp(3rem, 6vw, 5rem);
+  padding-block: var(--space-section);
   overflow: hidden;
 }
 .page-head h1 {
-  max-width: 18ch;
+  max-width: 20ch;
 }
 .page-head .lede {
   margin-top: 1.5rem;
   max-width: var(--measure);
   color: var(--ivory-soft);
-}
-
-/* ---------- Closing call-to-action band ---------- */
-.cta-band {
-  text-align: center;
-}
-.cta-band p {
-  margin-inline: auto;
-  max-width: 36rem;
-}
-.cta-band .button {
-  margin-top: 2.25rem;
 }
 
 /* ---------- Print ---------- */

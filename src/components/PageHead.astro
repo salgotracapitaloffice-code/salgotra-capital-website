@@ -10,15 +10,30 @@ const { eyebrow, title, intro, texture = 'none' } = Astro.props;
 
 <section class="page-head bg-midnight" aria-labelledby="page-title">
   {texture === 'ear' && <div class="page-head__ear" aria-hidden="true" />}
-  <div class="container">
+  <div class="container page-head__inner">
     {eyebrow && <span class="eyebrow">{eyebrow}</span>}
     <h1 id="page-title">{title}</h1>
+    <hr class="rule page-head__rule" />
     {intro && <p class="lede">{intro}</p>}
     <slot />
   </div>
 </section>
 
 <style>
+  /* Centred header with a Champagne hairline, so the dark band reads as complete on wide screens */
+  .page-head__inner {
+    position: relative;
+    text-align: center;
+  }
+  .page-head__inner :global(h1) {
+    margin-inline: auto;
+  }
+  .page-head__rule {
+    margin: 1.75rem auto 0;
+  }
+  .page-head__inner :global(.lede) {
+    margin-inline: auto;
+  }
   /* About page only: a heavily faded detail of the elephant's ear */
   .page-head__ear {
     position: absolute;
@@ -30,8 +45,5 @@ const { eyebrow, title, intro, texture = 'none' } = Astro.props;
     -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 55%);
     mask-image: linear-gradient(90deg, transparent 0%, #000 55%);
     pointer-events: none;
-  }
-  .container {
-    position: relative;
   }
 </style>
