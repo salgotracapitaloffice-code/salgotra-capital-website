@@ -6,3 +6,6 @@ dist/
 desktop.ini
 .DS_Store
 .claude/
+
+# Private company documents: keep on this computer only, never push
+DOCs/
