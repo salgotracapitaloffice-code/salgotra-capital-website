@@ -10,16 +10,21 @@ const year = new Date().getFullYear();
         <span class="site-footer__brand">{SITE.name}</span>
         <span class="site-footer__tagline">{SITE.tagline}</span>
       </p>
-      <p class="site-footer__place">{SITE.location}</p>
+      <p class="site-footer__contact">
+        <span class="site-footer__place">{SITE.location}</span>
+        <span aria-hidden="true" class="sep">&middot;</span>
+        <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>
+      </p>
     </div>
     <div class="site-footer__bottom">
       <p>
-        &copy; <span data-year>{year}</span> {SITE.name}. All rights reserved.
+        &copy; <span data-year>{year}</span> {SITE.name}
         <span aria-hidden="true" class="sep">&middot;</span>
         <a href="/privacy/">Privacy policy</a>
       </p>
       <p class="site-footer__small">
-        Salgotra Capital does not offer securities or investment products to the public.
+        Salgotra Capital buys and owns businesses. It is not a bank, NBFC or investment adviser, does not accept
+        deposits, and does not offer securities or investment products to the public.
       </p>
     </div>
   </div>
@@ -62,6 +67,12 @@ const year = new Date().getFullYear();
   .site-footer__tagline {
     font-style: italic;
   }
+  .site-footer__contact {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 0.25rem;
+  }
   .site-footer__place {
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -75,12 +86,13 @@ const year = new Date().getFullYear();
   .site-footer a {
     display: inline-block;
     padding-block: 0.6rem;
+    overflow-wrap: anywhere;
   }
   .sep {
     margin-inline: 0.5rem;
   }
   .site-footer__small {
-    font-size: 1rem;
+    max-width: 52rem;
     color: var(--ivory-soft);
   }
 </style>

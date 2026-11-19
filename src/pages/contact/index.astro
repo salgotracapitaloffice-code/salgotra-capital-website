@@ -7,7 +7,7 @@ const phone = SITE.PHONE.trim();
 const phoneHref = phone.replace(/[^\d+]/g, '');
 const isNetlify = SITE.form.provider === 'netlify';
 const thanks = 'Thank you. One of our directors will contact you personally within two working days.';
-const failure = `Sorry, that did not send. Please email us at ${SITE.enquiryEmail}.`;
+const failure = `Sorry, that did not send. Please email us at ${SITE.contactEmail}.`;
 ---
 
 <Base
@@ -49,43 +49,56 @@ const failure = `Sorry, that did not send. Please email us at ${SITE.enquiryEmai
             <p class="field__error" id="f-name-err" data-msg="Please enter your name." hidden></p>
           </div>
 
-          <div class="field">
-            <label for="f-business">Business name</label>
-            <input id="f-business" name="business" type="text" autocomplete="organization" />
-          </div>
-
           <div class="field-row">
+            <div class="field">
+              <label for="f-business">Business name</label>
+              <input id="f-business" name="business" type="text" autocomplete="organization" />
+            </div>
             <div class="field">
               <label for="f-city">City</label>
               <input id="f-city" name="city" type="text" autocomplete="address-level2" />
             </div>
-            <div class="field">
-              <label for="f-phone">Phone</label>
-              <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" />
-            </div>
           </div>
 
-          <div class="field">
-            <label for="f-email">Email <span class="req">(required)</span></label>
-            <input
-              id="f-email"
-              name="email"
-              type="email"
-              autocomplete="email"
-              inputmode="email"
-              spellcheck="false"
-              required
-              aria-describedby="f-email-err"
-            />
+          <fieldset class="reach" aria-describedby="f-reach-help">
+            <legend class="visually-hidden">How we can reach you: a phone number or an email address</legend>
+            <div class="field-row">
+              <div class="field">
+                <label for="f-phone">Phone</label>
+                <input
+                  id="f-phone"
+                  name="phone"
+                  type="tel"
+                  autocomplete="tel"
+                  inputmode="tel"
+                  aria-describedby="f-reach-help f-reach-err"
+                />
+              </div>
+              <div class="field">
+                <label for="f-email">Email</label>
+                <input
+                  id="f-email"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  inputmode="email"
+                  spellcheck="false"
+                  aria-describedby="f-reach-help f-reach-err"
+                />
+              </div>
+            </div>
+            <p class="field__help" id="f-reach-help">
+              Please give a phone number or an email address, whichever you prefer.
+            </p>
             <p
               class="field__error"
-              id="f-email-err"
-              data-msg="Please enter your email address."
+              id="f-reach-err"
+              data-msg="Please give a phone number or an email address so we can reach you."
               data-msg-invalid="Please check your email address."
               hidden
             >
             </p>
-          </div>
+          </fieldset>
 
           <div class="field">
             <label for="f-message">Tell us a little about your business (optional)</label>
@@ -105,6 +118,7 @@ const failure = `Sorry, that did not send. Please email us at ${SITE.enquiryEmai
 
           <div class="enquiry__actions">
             <button class="button" type="submit" data-label="Send in confidence">Send in confidence</button>
+            <p class="enquiry__note">A director will reply personally within two working days.</p>
           </div>
           <p class="enquiry__failure" role="alert" hidden>{failure}</p>
         </form>
@@ -115,26 +129,33 @@ const failure = `Sorry, that did not send. Please email us at ${SITE.enquiryEmai
         </div>
       </div>
 
-      <aside class="contact__direct" aria-labelledby="direct-title">
-        <h2 id="direct-title" class="eyebrow direct-label">Direct contact</h2>
-        <ul role="list">
-          {
-            SITE.contacts.map((c) => (
-              <li>
-                <span class="direct__name">{c.name}</span>
-                <a href={`mailto:${c.email}`}>{c.email}</a>
-              </li>
-            ))
-          }
-          {
-            phone && (
-              <li>
-                <span class="direct__name">Phone</span>
-                <a href={`tel:${phoneHref}`}>{phone}</a>
-              </li>
-            )
-          }
-        </ul>
+      <aside class="contact__side">
+        <div class="side-block" aria-labelledby="next-title">
+          <h2 id="next-title" class="side-label">What happens next</h2>
+          <ol class="next" role="list">
+            <li>A director reads your message and replies within two working days.</li>
+            <li>If it makes sense for both of us, we arrange a call or a meeting at a time and place that suits you.</li>
+            <li>Nothing is shared with anyone, and nothing is committed, at this stage.</li>
+          </ol>
+        </div>
+
+        <div class="side-block" aria-labelledby="direct-title">
+          <h2 id="direct-title" class="side-label">Direct contact</h2>
+          <ul class="direct" role="list">
+            <li>
+              <span class="direct__name">Email</span>
+              <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>
+            </li>
+            {
+              phone && (
+                <li>
+                  <span class="direct__name">Phone</span>
+                  <a href={`tel:${phoneHref}`}>{phone}</a>
+                </li>
+              )
+            }
+          </ul>
+        </div>
       </aside>
     </div>
   </section>
@@ -152,7 +173,7 @@ const failure = `Sorry, that did not send. Please email us at ${SITE.enquiryEmai
     }
   }
   .contact__form-wrap,
-  .contact__direct {
+  .contact__side {
     background: var(--cream);
     box-shadow: 0 0 2.5rem 1.5rem var(--cream);
   }
@@ -166,6 +187,11 @@ const failure = `Sorry, that did not send. Please email us at ${SITE.enquiryEmai
   .field {
     display: grid;
     gap: 0.45rem;
+    min-width: 0;
+  }
+  .contact__grid > *,
+  .field-row > * {
+    min-width: 0;
   }
   .field-row {
     display: grid;
@@ -178,7 +204,19 @@ const failure = `Sorry, that did not send. Please email us at ${SITE.enquiryEmai
   }
   label {
     color: var(--ink);
-    font-size: 1.0625rem;
+    font-size: 1.125rem;
+  }
+  .reach {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    min-width: 0;
+    display: grid;
+    gap: 0.6rem;
+  }
+  .field__help {
+    color: var(--ink-soft);
+    font-size: 1rem;
   }
   .req {
     color: var(--ink-soft);
@@ -190,6 +228,7 @@ const failure = `Sorry, that did not send. Please email us at ${SITE.enquiryEmai
   input[type='tel'],
   textarea {
     width: 100%;
+    min-width: 0;
     min-height: 3rem;
     padding: 0.7rem 0.9rem;
     border: 1px solid #8a7f6c; /* 3.2:1 against Cream, for a visible field edge */
@@ -277,7 +316,12 @@ const failure = `Sorry, that did not send. Please email us at ${SITE.enquiryEmai
     padding-top: 0.5rem;
   }
   .enquiry__actions .button {
-    min-width: 14rem;
+    min-width: min(14rem, 100%);
+  }
+  .enquiry__note {
+    margin-top: 0.85rem;
+    font-size: 1rem;
+    color: var(--ink-soft);
   }
   .enquiry__failure {
     color: var(--ink);
@@ -305,17 +349,49 @@ const failure = `Sorry, that did not send. Please email us at ${SITE.enquiryEmai
     outline: none;
   }
 
-  /* ---------- Direct contact ---------- */
-  .direct-label {
-    font-size: 1rem;
-    line-height: 1.6;
+  /* ---------- What happens next and direct contact ---------- */
+  .side-block + .side-block {
+    margin-top: 2.75rem;
   }
-  .contact__direct ul {
+  .side-label {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.6;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--bronze);
+    margin-bottom: 1rem;
+  }
+  .next {
+    list-style: none;
+    padding: 0;
+    border-top: 1px solid var(--bronze);
+    counter-reset: next;
+  }
+  .next li {
+    counter-increment: next;
+    position: relative;
+    padding: 1rem 0 1rem 2.25rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--umber) 22%, transparent);
+    color: var(--ink);
+  }
+  .next li::before {
+    content: counter(next);
+    position: absolute;
+    left: 0;
+    top: 0.95rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: var(--bronze);
+  }
+  .direct {
     list-style: none;
     padding: 0;
     border-top: 1px solid var(--bronze);
   }
-  .contact__direct li {
+  .direct li {
     display: grid;
     padding-block: 1rem;
     border-bottom: 1px solid color-mix(in srgb, var(--umber) 22%, transparent);
@@ -326,7 +402,7 @@ const failure = `Sorry, that did not send. Please email us at ${SITE.enquiryEmai
     font-size: 1.3rem;
     color: var(--ink);
   }
-  .contact__direct a {
+  .direct a {
     display: inline-block;
     padding-block: 0.5rem;
     overflow-wrap: anywhere;
@@ -339,27 +415,52 @@ const failure = `Sorry, that did not send. Please email us at ${SITE.enquiryEmai
     const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
     const failure = form.querySelector<HTMLElement>('.enquiry__failure')!;
     const thanks = document.querySelector<HTMLElement>('.enquiry__thanks')!;
-    const fields = Array.from(form.querySelectorAll<HTMLInputElement>('input[required]'));
+    const name = form.querySelector<HTMLInputElement>('#f-name')!;
+    const consent = form.querySelector<HTMLInputElement>('#f-consent')!;
+    const phoneInput = form.querySelector<HTMLInputElement>('#f-phone')!;
+    const emailInput = form.querySelector<HTMLInputElement>('#f-email')!;
+    const reachErr = document.getElementById('f-reach-err')!;
     let sending = false;
+    let triedSubmit = false;
 
-    const showError = (input: HTMLInputElement) => {
-      const err = document.getElementById(`${input.id}-err`);
-      if (!err) return true;
-      let msg = '';
-      if (input.type === 'checkbox') msg = input.checked ? '' : err.dataset.msg!;
-      else if (!input.value.trim()) msg = err.dataset.msg!;
-      else if (input.validity.typeMismatch) msg = err.dataset.msgInvalid ?? err.dataset.msg!;
-      err.textContent = msg;
-      err.hidden = !msg;
-      input.setAttribute('aria-invalid', msg ? 'true' : 'false');
-      return !msg;
+    // Name and consent: required on their own
+    const checkRequired = (input: HTMLInputElement) => {
+      const err = document.getElementById(`${input.id}-err`)!;
+      const ok = input.type === 'checkbox' ? input.checked : input.value.trim() !== '';
+      err.textContent = ok ? '' : err.dataset.msg!;
+      err.hidden = ok;
+      input.setAttribute('aria-invalid', ok ? 'false' : 'true');
+      return ok;
     };
 
-    fields.forEach((input) => {
-      const evt = input.type === 'checkbox' ? 'change' : 'blur';
-      input.addEventListener(evt, () => {
-        if (input.getAttribute('aria-invalid') === 'true' || input.type !== 'checkbox') showError(input);
-      });
+    // Phone or email: at least one, and the email must look like an email if given
+    const checkReach = () => {
+      const phone = phoneInput.value.trim();
+      const email = emailInput.value.trim();
+      let msg = '';
+      let bad: HTMLInputElement[] = [];
+      if (!phone && !email) {
+        msg = reachErr.dataset.msg!;
+        bad = [phoneInput, emailInput];
+      } else if (email && emailInput.validity.typeMismatch) {
+        msg = reachErr.dataset.msgInvalid!;
+        bad = [emailInput];
+      }
+      reachErr.textContent = msg;
+      reachErr.hidden = !msg;
+      [phoneInput, emailInput].forEach((el) => el.setAttribute('aria-invalid', bad.includes(el) ? 'true' : 'false'));
+      return bad;
+    };
+
+    name.addEventListener('blur', () => triedSubmit && checkRequired(name));
+    consent.addEventListener('change', () => consent.getAttribute('aria-invalid') === 'true' && checkRequired(consent));
+    [phoneInput, emailInput].forEach((el) =>
+      el.addEventListener('input', () => {
+        if (!reachErr.hidden) checkReach();
+      }),
+    );
+    emailInput.addEventListener('blur', () => {
+      if (emailInput.value.trim()) checkReach();
     });
 
     // On phones, keep the field being typed in above the on-screen keyboard.
@@ -380,7 +481,11 @@ const failure = `Sorry, that did not send. Please email us at ${SITE.enquiryEmai
       if (sending) return;
       failure.hidden = true;
 
-      const invalid = fields.filter((f) => !showError(f));
+      triedSubmit = true;
+      const invalid: HTMLInputElement[] = [];
+      if (!checkRequired(name)) invalid.push(name);
+      invalid.push(...checkReach());
+      if (!checkRequired(consent)) invalid.push(consent);
       if (invalid.length) {
         invalid[0].focus();
         return;

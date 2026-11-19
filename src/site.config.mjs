@@ -7,15 +7,17 @@ export const SITE = {
   // Public domain, used for canonical URLs, the sitemap and social previews.
   domain: 'https://salgotracapital.com',
 
-  // Directors' email addresses
-  contacts: [
+  // Email addresses
+  // contactEmail is the only address shown on the site (footer, Contact page,
+  // and every "please email us" fallback). It reaches both directors.
+  contactEmail: 'contact@salgotracapital.com',
+  // Shown in the privacy policy for data requests
+  privacyEmail: 'privacy@salgotracapital.com',
+  // Directors' personal addresses: kept here for reference, not shown on the site
+  directors: [
     { name: 'Harman Salgotra', email: 'harman@salgotracapital.com' },
     { name: 'Deepanshu Singh', email: 'deepanshu@salgotracapital.com' },
   ],
-  // Shown in the privacy policy for data requests
-  privacyEmail: 'privacy@salgotracapital.com',
-  // Shown in the contact form's "Sorry, that did not send" message
-  enquiryEmail: 'harman@salgotracapital.com',
 
   // PHONE: leave empty to hide the phone line everywhere.
   // Example: '+91 98765 43210'
