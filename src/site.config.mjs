@@ -12,7 +12,10 @@ export const SITE = {
     { name: 'Harman Salgotra', email: 'harman@salgotracapital.com' },
     { name: 'Deepanshu Singh', email: 'deepanshu@salgotracapital.com' },
   ],
-  privacyEmail: 'harman@salgotracapital.com',
+  // Shown in the privacy policy for data requests
+  privacyEmail: 'privacy@salgotracapital.com',
+  // Shown in the contact form's "Sorry, that did not send" message
+  enquiryEmail: 'harman@salgotracapital.com',
 
   // PHONE: leave empty to hide the phone line everywhere.
   // Example: '+91 98765 43210'

@@ -7,7 +7,7 @@ const phone = SITE.PHONE.trim();
 const phoneHref = phone.replace(/[^\d+]/g, '');
 const isNetlify = SITE.form.provider === 'netlify';
 const thanks = 'Thank you. One of our directors will contact you personally within two working days.';
-const failure = `Sorry, that did not send. Please email us at ${SITE.privacyEmail}.`;
+const failure = `Sorry, that did not send. Please email us at ${SITE.enquiryEmail}.`;
 ---
 
 <Base

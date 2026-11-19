@@ -39,13 +39,14 @@ Everything lives in **`src/site.config.mjs`**:
 ```js
 domain: 'https://salgotracapital.com',   // canonical URLs, sitemap, social previews
 contacts: [ { name: 'Harman Salgotra', email: 'harman@salgotracapital.com' }, ... ],
-privacyEmail: 'harman@salgotracapital.com',
+privacyEmail: 'privacy@salgotracapital.com',
+enquiryEmail: 'harman@salgotracapital.com',
 PHONE: '',                                // leave empty to hide the phone line
 form: { name: 'contact', endpoint: '/contact/', provider: 'netlify' },
 ```
 
 - **Phone:** put the number in `PHONE`, for example `'+91 98765 43210'`. While it is empty, the phone line doesn't appear anywhere.
-- **Emails:** edit `contacts` (shown on the Contact page) and `privacyEmail` (used in the privacy policy and in the form's error message).
+- **Emails:** edit `contacts` (shown on the Contact page), `privacyEmail` (used in the privacy policy) and `enquiryEmail` (used in the form's error message).
 - **Privacy policy date:** change `LAST_UPDATED` at the top of `src/pages/privacy.astro`.
 
 ## Deploy to Netlify
@@ -54,7 +55,7 @@ form: { name: 'contact', endpoint: '/contact/', provider: 'netlify' },
 2. In Netlify, choose **Add new site → Import an existing project → GitHub**, then pick `salgotra-capital-website`.
 3. Netlify reads the build settings from `netlify.toml` (`npm run build`, publish folder `dist`). Click **Deploy**.
 4. **Turn on the form:** go to **Site configuration → Forms** and click **Enable form detection**. Then trigger a new deploy (**Deploys → Trigger deploy**). Netlify will find the form called `contact`.
-5. **Get email notifications:** go to **Forms → Form notifications → Add notification → Email notification**. Choose the `contact` form and enter `harman@salgotracapital.com` (and add another for Deepanshu if wanted).
+5. **Get email notifications:** go to **Forms → Form notifications → Add notification → Email notification**. Choose the `contact` form and enter `contact@salgotracapital.com`, then click the confirmation link Netlify sends to that inbox.
 6. Send a test enquiry from the live site and check that it shows up under **Forms**.
 
 Every push to `main` redeploys the site automatically.
