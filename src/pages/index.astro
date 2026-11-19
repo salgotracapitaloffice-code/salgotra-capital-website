@@ -1,22 +1,32 @@
 ---
 import Base from '../layouts/Base.astro';
+import CtaBand from '../components/CtaBand.astro';
 
 const differences = [
   {
     title: 'We buy to keep.',
-    text: 'We have no plan to resell. Your business becomes a permanent part of our group.',
+    text: 'We do not buy businesses to resell them. Yours becomes a permanent part of our group.',
   },
   {
-    title: 'Your name and people stay.',
-    text: "We keep the business's name, its team and its customer relationships, and appoint a strong manager to lead it forward.",
+    title: 'Your name and people matter.',
+    text: "Our plan is to keep the business's name, its team and its customer relationships, with a capable manager to lead it forward.",
   },
   {
-    title: 'A fair, clear process.',
-    text: 'Our offers are based on real profit, explained in writing, with terms the business itself can support.',
+    title: 'You deal with the directors.',
+    text: 'From the first conversation to handover, you speak directly with the two people who make the decisions. If something does not fit, we tell you early.',
   },
   {
     title: 'Complete confidentiality.',
     text: 'Your staff, customers and competitors will not hear about our conversations from us.',
+  },
+];
+
+const steps = [
+  { title: 'A conversation.', text: 'We listen first. No numbers, no commitment.' },
+  { title: 'A written offer.', text: 'Price and payment terms, in plain language.' },
+  {
+    title: 'A careful handover.',
+    text: 'You stay involved for an agreed period so the business continues smoothly.',
   },
 ];
 ---
@@ -83,7 +93,7 @@ const differences = [
 
   <section class="section on-light" aria-labelledby="built-title">
     <div class="container">
-      <div class="measure reveal stack">
+      <div class="measure center reveal stack">
         <span class="eyebrow">For business owners</span>
         <h2 id="built-title">You built something that lasts</h2>
         <p>
@@ -98,7 +108,7 @@ const differences = [
 
   <section class="section on-light grain grain--both hairline-top" aria-labelledby="diff-title">
     <div class="container">
-      <div class="reveal">
+      <div class="reveal section-head">
         <span class="eyebrow">Our principles</span>
         <h2 id="diff-title">What makes us different</h2>
       </div>
@@ -115,30 +125,51 @@ const differences = [
     </div>
   </section>
 
-  <section class="section bg-moss" aria-labelledby="ahead-title">
+  <section class="section bg-moss" aria-labelledby="brief-title">
     <div class="container">
-      <div class="measure center ahead reveal">
-        <span class="eyebrow">Looking further ahead</span>
-        <h2 id="ahead-title" class="visually-hidden">Looking further ahead</h2>
-        <p class="statement">
-          Over time, the businesses we own will help us back the next generation of Indian founders, with patient
-          capital and the practical help of established companies.
+      <div class="reveal section-head">
+        <span class="eyebrow">The process</span>
+        <h2 id="brief-title">How it works, in brief</h2>
+      </div>
+      <ol class="brief" role="list">
+        {
+          steps.map((s, i) => (
+            <li class="brief__step reveal">
+              <span class="step-num step-num--dark" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <h3>
+                <span class="visually-hidden">Step {i + 1}: </span>
+                {s.title}
+              </h3>
+              <p>{s.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+      <p class="brief__more reveal">
+        <a class="text-link" href="/for-business-owners/">See the full process <span aria-hidden="true">&rarr;</span></a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section on-light" aria-labelledby="fit-title">
+    <div class="container">
+      <div class="measure center reveal stack">
+        <span class="eyebrow">What we look for</span>
+        <h2 id="fit-title">Is your business a fit?</h2>
+        <p>
+          We look for established, profitable businesses with ₹1.5 crore to ₹10 crore in yearly revenue, at least
+          seven years of history, and customers who come back.
         </p>
-        <hr class="rule rule--burgundy center" />
+        <p>
+          <a class="text-link" href="/what-we-look-for/">See what we look for <span aria-hidden="true">&rarr;</span></a>
+        </p>
       </div>
     </div>
   </section>
 
-  <section class="section bg-midnight cta-band" aria-labelledby="cta-title">
-    <div class="container reveal">
-      <h2 id="cta-title" class="visually-hidden">Talk to us</h2>
-      <p class="lede">
-        If you are thinking about the future of your business, now or in the years ahead, we would value a
-        conversation.
-      </p>
-      <a class="button" href="/contact/">Talk to us</a>
-    </div>
-  </section>
+  <CtaBand line="If you are thinking about the future of your business, now or in the years ahead, we would value a conversation." />
 </Base>
 
 <style>
@@ -253,6 +284,9 @@ const differences = [
   }
 
   /* ---------- Sections ---------- */
+  .section-head {
+    text-align: center;
+  }
   .closing-line {
     font-family: var(--font-display);
     font-size: clamp(1.5rem, 1.3rem + 0.8vw, 1.9rem);
@@ -283,28 +317,39 @@ const differences = [
   }
   .principles__item p {
     color: var(--ink-soft);
-    max-width: 30rem;
   }
 
-  .ahead {
+  /* ---------- How it works, in brief: one row across the full width ---------- */
+  .brief {
+    list-style: none;
+    padding: 0;
+    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+    display: grid;
+    gap: 2.5rem clamp(2rem, 4vw, 3.5rem);
+  }
+  @media (min-width: 48rem) {
+    .brief {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .brief__step {
+    border-top: 1px solid color-mix(in srgb, var(--champagne) 30%, transparent);
+    padding-top: 1.75rem;
+  }
+  .brief__step h3 {
+    margin: 1.1rem 0 0.4rem;
+  }
+  .brief__step p {
+    color: var(--ivory);
+  }
+  .brief__more {
+    margin-top: 2.5rem;
     text-align: center;
   }
-  .statement {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-style: italic;
-    font-size: clamp(1.65rem, 1.3rem + 1.5vw, 2.4rem);
-    line-height: 1.3;
+  .brief__more a {
+    color: var(--champagne);
+  }
+  .brief__more a:hover {
     color: var(--ivory);
-    text-wrap: balance;
-  }
-  .ahead .rule {
-    margin-top: 2.5rem;
-  }
-  .cta-band .lede {
-    font-family: var(--font-display);
-    font-size: clamp(1.5rem, 1.25rem + 1vw, 2rem);
-    line-height: 1.35;
-    max-width: 38rem;
   }
 </style>
