@@ -1,0 +1,310 @@
+---
+import Base from '../layouts/Base.astro';
+
+const differences = [
+  {
+    title: 'We buy to keep.',
+    text: 'We have no plan to resell. Your business becomes a permanent part of our group.',
+  },
+  {
+    title: 'Your name and people stay.',
+    text: "We keep the business's name, its team and its customer relationships, and appoint a strong manager to lead it forward.",
+  },
+  {
+    title: 'A fair, clear process.',
+    text: 'Our offers are based on real profit, explained in writing, with terms the business itself can support.',
+  },
+  {
+    title: 'Complete confidentiality.',
+    text: 'Your staff, customers and competitors will not hear about our conversations from us.',
+  },
+];
+---
+
+<Base
+  title="Salgotra Capital: Permanent capital for enduring businesses"
+  description="Salgotra Capital buys well-run Indian businesses from owners ready to step back, and keeps them for good. Start a confidential conversation."
+  heroPreload
+>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero__media" aria-hidden="true">
+      <picture>
+        <source
+          media="(max-width: 47.99rem)"
+          type="image/avif"
+          srcset="/images/hero-mobile-480.avif 480w, /images/hero-mobile-720.avif 720w, /images/hero-mobile-900.avif 900w"
+          sizes="100vw"
+        />
+        <source
+          media="(max-width: 47.99rem)"
+          type="image/webp"
+          srcset="/images/hero-mobile-480.webp 480w, /images/hero-mobile-720.webp 720w, /images/hero-mobile-900.webp 900w"
+          sizes="100vw"
+        />
+        <source
+          media="(max-width: 47.99rem)"
+          srcset="/images/hero-mobile-480.jpg 480w, /images/hero-mobile-720.jpg 720w, /images/hero-mobile-900.jpg 900w"
+          sizes="100vw"
+        />
+        <source
+          type="image/avif"
+          srcset="/images/hero-960.avif 960w, /images/hero-1440.avif 1440w, /images/hero-1920.avif 1920w"
+          sizes="100vw"
+        />
+        <source
+          type="image/webp"
+          srcset="/images/hero-960.webp 960w, /images/hero-1440.webp 1440w, /images/hero-1920.webp 1920w"
+          sizes="100vw"
+        />
+        <img
+          src="/images/hero-1440.jpg"
+          srcset="/images/hero-960.jpg 960w, /images/hero-1440.jpg 1440w, /images/hero-1920.jpg 1920w"
+          sizes="100vw"
+          alt=""
+          width="1920"
+          height="1080"
+          fetchpriority="high"
+          decoding="async"
+        />
+      </picture>
+      <div class="hero__tone"></div>
+      <div class="hero__fog"></div>
+      <div class="hero__drift"></div>
+    </div>
+
+    <div class="container hero__content">
+      <h1 id="hero-title">Permanent capital for enduring businesses.</h1>
+      <p class="lede">
+        We buy well-run Indian businesses from owners who are ready to step back, and we keep them for good.
+      </p>
+      <a class="button" href="/contact/">Start a confidential conversation</a>
+    </div>
+  </section>
+
+  <section class="section on-light" aria-labelledby="built-title">
+    <div class="container">
+      <div class="measure reveal stack">
+        <span class="eyebrow">For business owners</span>
+        <h2 id="built-title">You built something that lasts</h2>
+        <p>
+          You have spent years, perhaps decades, building a business that customers rely on and people depend on.
+          Now you are thinking about what comes next. Perhaps there is no family member ready to take over. Perhaps
+          you want to step back without seeing your life's work broken up or resold.
+        </p>
+        <p class="closing-line"><em>Salgotra Capital exists for that moment.</em></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section on-light grain grain--both hairline-top" aria-labelledby="diff-title">
+    <div class="container">
+      <div class="reveal">
+        <span class="eyebrow">Our principles</span>
+        <h2 id="diff-title">What makes us different</h2>
+      </div>
+      <ol class="principles" role="list">
+        {
+          differences.map((d) => (
+            <li class="principles__item reveal">
+              <h3>{d.title}</h3>
+              <p>{d.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section bg-moss" aria-labelledby="ahead-title">
+    <div class="container">
+      <div class="measure center ahead reveal">
+        <span class="eyebrow">Looking further ahead</span>
+        <h2 id="ahead-title" class="visually-hidden">Looking further ahead</h2>
+        <p class="statement">
+          Over time, the businesses we own will help us back the next generation of Indian founders, with patient
+          capital and the practical help of established companies.
+        </p>
+        <hr class="rule rule--burgundy center" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-midnight cta-band" aria-labelledby="cta-title">
+    <div class="container reveal">
+      <h2 id="cta-title" class="visually-hidden">Talk to us</h2>
+      <p class="lede">
+        If you are thinking about the future of your business, now or in the years ahead, we would value a
+        conversation.
+      </p>
+      <a class="button" href="/contact/">Talk to us</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ---------- Hero: the elephant emerging from mist ---------- */
+  .hero {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: center;
+    min-height: clamp(36rem, calc(100svh - 5.25rem), 54rem);
+    padding-block: clamp(4rem, 10vw, 7rem);
+    background: var(--onyx);
+    overflow: hidden;
+  }
+  .hero__media,
+  .hero__media > * {
+    position: absolute;
+    inset: 0;
+  }
+  .hero__media {
+    z-index: -1;
+  }
+  .hero__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 78% 40%;
+    opacity: 0.82;
+  }
+  /* Warm sepia tone so the photograph melts into the palette */
+  .hero__tone {
+    background: var(--umber);
+    mix-blend-mode: color;
+    opacity: 0.55;
+  }
+  /* Fog: solid on the text side, clearing over the elephant, plus a soft vignette */
+  .hero__fog {
+    background:
+      radial-gradient(ellipse 90% 85% at 72% 45%, transparent 40%, rgb(5 5 5 / 0.65) 100%),
+      linear-gradient(
+        90deg,
+        var(--onyx) 0%,
+        rgb(25 33 44 / 0.96) 28%,
+        rgb(25 33 44 / 0.8) 46%,
+        rgb(25 33 44 / 0.5) 60%,
+        rgb(25 33 44 / 0.16) 76%,
+        rgb(25 33 44 / 0) 90%
+      );
+  }
+  /* A slow drift of mist across the elephant */
+  .hero__drift {
+    background:
+      radial-gradient(ellipse 38% 30% at 70% 30%, rgb(214 204 168 / 0.07), transparent 70%),
+      radial-gradient(ellipse 45% 35% at 85% 75%, rgb(25 33 44 / 0.55), transparent 70%);
+    opacity: 0.8;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero__drift {
+      animation: drift 28s ease-in-out infinite alternate;
+    }
+  }
+  @keyframes drift {
+    from {
+      opacity: 0.55;
+      transform: translate3d(-1.5%, 0, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(1.5%, -1%, 0);
+    }
+  }
+
+  .hero__content {
+    position: relative;
+  }
+  .hero__content > * {
+    max-width: 36rem;
+  }
+  .hero h1 {
+    color: var(--ivory);
+    max-width: 14ch;
+  }
+  .hero .lede {
+    margin-top: 1.5rem;
+    color: var(--ivory);
+    max-width: 32rem;
+  }
+  .hero .button {
+    margin-top: 2.5rem;
+  }
+
+  @media (max-width: 47.99rem) {
+    .hero {
+      align-items: flex-start;
+      min-height: max(40rem, calc(100svh - 5.25rem));
+      padding-block: 3.5rem 18rem;
+    }
+    .hero__media img {
+      object-position: 50% 100%;
+      opacity: 0.75;
+    }
+    .hero__fog {
+      background: linear-gradient(
+        180deg,
+        var(--onyx) 0%,
+        rgb(5 5 5 / 0.94) 38%,
+        rgb(25 33 44 / 0.72) 62%,
+        rgb(25 33 44 / 0.42) 82%,
+        rgb(5 5 5 / 0.8) 100%
+      );
+    }
+  }
+
+  /* ---------- Sections ---------- */
+  .closing-line {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 1.3rem + 0.8vw, 1.9rem);
+    line-height: 1.3;
+    color: var(--ink);
+    padding-top: 0.5rem;
+  }
+
+  .principles {
+    list-style: none;
+    padding: 0;
+    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+    gap: 0 clamp(2rem, 5vw, 4.5rem);
+  }
+  .principles__item {
+    position: relative;
+    padding: 1.75rem 0 2rem;
+    border-top: 1px solid color-mix(in srgb, var(--umber) 30%, transparent);
+    /* Solid ground under each text block so the growth rings never sit beneath text */
+    background: var(--cream);
+    box-shadow: 0 0 2.5rem 1.5rem var(--cream);
+  }
+  .principles__item h3 {
+    color: var(--ink);
+    margin-bottom: 0.6rem;
+  }
+  .principles__item p {
+    color: var(--ink-soft);
+    max-width: 30rem;
+  }
+
+  .ahead {
+    text-align: center;
+  }
+  .statement {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-style: italic;
+    font-size: clamp(1.65rem, 1.3rem + 1.5vw, 2.4rem);
+    line-height: 1.3;
+    color: var(--ivory);
+    text-wrap: balance;
+  }
+  .ahead .rule {
+    margin-top: 2.5rem;
+  }
+  .cta-band .lede {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 1.25rem + 1vw, 2rem);
+    line-height: 1.35;
+    max-width: 38rem;
+  }
+</style>
