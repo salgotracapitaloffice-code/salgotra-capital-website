@@ -38,15 +38,15 @@ Everything lives in **`src/site.config.mjs`**:
 
 ```js
 domain: 'https://salgotracapital.com',   // canonical URLs, sitemap, social previews
-contacts: [ { name: 'Harman Salgotra', email: 'harman@salgotracapital.com' }, ... ],
-privacyEmail: 'privacy@salgotracapital.com',
-enquiryEmail: 'harman@salgotracapital.com',
+contactEmail: 'contact@salgotracapital.com',   // the only address shown on the site
+privacyEmail: 'privacy@salgotracapital.com',   // privacy policy requests
+directors: [ { name: 'Harman Salgotra', email: 'harman@salgotracapital.com' }, ... ],  // not shown
 PHONE: '',                                // leave empty to hide the phone line
 form: { name: 'contact', endpoint: '/contact/', provider: 'netlify' },
 ```
 
 - **Phone:** put the number in `PHONE`, for example `'+91 98765 43210'`. While it is empty, the phone line doesn't appear anywhere.
-- **Emails:** edit `contacts` (shown on the Contact page), `privacyEmail` (used in the privacy policy) and `enquiryEmail` (used in the form's error message).
+- **Emails:** `contactEmail` appears in the footer, on the Contact page and in the form's "Sorry, that did not send" message. `privacyEmail` appears in the privacy policy. The directors' own addresses stay in the config only and are not shown anywhere on the site.
 - **Privacy policy date:** change `LAST_UPDATED` at the top of `src/pages/privacy.astro`.
 
 ## Deploy to Netlify
@@ -102,6 +102,17 @@ The originals are in `assets/source/` and are never changed:
 - `favicon-32.png`, `apple-touch-icon.png`, `icon-192.png`, `icon-512.png`.
 
 The generated files are committed. Only run `npm run images` again if you replace a source image.
+
+## Fonts
+
+Cormorant Garamond (headings) and EB Garamond (body) are self-hosted from the `@fontsource` packages, with `font-display: swap`.
+
+The latin subset of EB Garamond has no rupee sign (₹), so browsers used to draw it in a different, heavier font. `public/fonts/eb-garamond-rupee-400.woff2` and `-500.woff2` contain only that one glyph, cut from EB Garamond's latin-ext subset. They load only on pages that show ₹. To recreate them:
+
+```bash
+pip install fonttools brotli
+python -m fontTools.subset node_modules/@fontsource/eb-garamond/files/eb-garamond-latin-ext-400-normal.woff2 --unicodes=U+20B9 --flavor=woff2 --output-file=public/fonts/eb-garamond-rupee-400.woff2
+```
 
 ## Palette
 
