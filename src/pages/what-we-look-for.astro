@@ -1,0 +1,118 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+
+const criteria = [
+  ['Revenue', '₹1.5 crore to ₹10 crore a year'],
+  ['Profitability', 'Profitable in each of the last three years'],
+  ['History', 'At least seven years in business'],
+  ['Customers', 'Repeat or contracted customers, with no single customer dominating'],
+  ['Team', 'A business that can run day to day without the owner'],
+  ['Owner', 'Ready to step back and support a handover'],
+];
+---
+
+<Base
+  title="The businesses we buy | Salgotra Capital"
+  description="Salgotra Capital looks for established, profitable businesses that customers return to year after year. Industry and location are open across India."
+>
+  <PageHead
+    eyebrow="What we look for"
+    title="The businesses we buy."
+    intro="We look for established, profitable businesses that customers return to year after year. Industry and location are open across India."
+  />
+
+  <section class="section on-light" aria-labelledby="criteria-title">
+    <div class="container">
+      <div class="criteria-wrap reveal">
+        <h2 id="criteria-title" class="eyebrow criteria-label">What we look for</h2>
+        <dl class="criteria">
+          {
+            criteria.map(([term, detail]) => (
+              <div class="criteria__row">
+                <dt>{term}</dt>
+                <dd>{detail}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+
+      <div class="sectors measure reveal">
+        <hr class="rule" />
+        <p class="sectors__text">
+          <span class="sectors__lead">Sectors we look at first:</span> contract business services, niche
+          manufacturing, specialist distribution, energy services, logistics and healthcare services.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-moss" aria-labelledby="advisors-title">
+    <div class="container">
+      <div class="measure reveal">
+        <h2 id="advisors-title">For advisors</h2>
+        <p class="lede advisors__text">
+          If you are a chartered accountant, lawyer, banker or advisor with a client who fits, we would be glad to
+          hear from you, in confidence.
+        </p>
+        <a class="button" href="/contact/">Start a confidential conversation</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .criteria-wrap {
+    max-width: 52rem;
+  }
+  .criteria-label {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+  }
+  .criteria {
+    border-top: 1px solid var(--bronze);
+  }
+  .criteria__row {
+    display: grid;
+    grid-template-columns: minmax(9rem, 14rem) 1fr;
+    gap: 0.25rem 2rem;
+    padding-block: 1.2rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--umber) 22%, transparent);
+  }
+  .criteria dt {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.35rem;
+    line-height: 1.35;
+    color: var(--ink);
+  }
+  .criteria dd {
+    color: var(--ink-soft);
+    font-size: 1.1em;
+  }
+  @media (max-width: 35.99rem) {
+    .criteria__row {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .sectors {
+    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  }
+  .sectors .rule {
+    margin-top: 0;
+  }
+  .sectors__text {
+    font-size: 1.15em;
+  }
+  .sectors__lead {
+    font-style: italic;
+    color: var(--ink);
+  }
+
+  .advisors__text {
+    margin-block: 1.25rem 2.25rem;
+  }
+</style>
