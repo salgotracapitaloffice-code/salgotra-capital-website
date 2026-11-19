@@ -1,0 +1,30 @@
+---
+// Fallback confirmation, shown only when the form is sent without JavaScript.
+// With JavaScript, the same message appears on the contact page itself.
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+---
+
+<Base
+  title="Thank you | Salgotra Capital"
+  description="Thank you. One of our directors will contact you personally within two working days."
+  noindex
+>
+  <PageHead
+    eyebrow="Contact"
+    title="Thank you."
+    intro="Thank you. One of our directors will contact you personally within two working days."
+  >
+    <p class="back"><a href="/">Return to the home page</a></p>
+  </PageHead>
+</Base>
+
+<style>
+  .back {
+    margin-top: 2rem;
+  }
+  .back a {
+    display: inline-block;
+    padding-block: 0.6rem;
+  }
+</style>

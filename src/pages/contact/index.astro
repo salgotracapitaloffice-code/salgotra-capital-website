@@ -1,0 +1,420 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import { SITE } from '../../site.config.mjs';
+
+const phone = SITE.PHONE.trim();
+const phoneHref = phone.replace(/[^\d+]/g, '');
+const isNetlify = SITE.form.provider === 'netlify';
+const thanks = 'Thank you. One of our directors will contact you personally within two working days.';
+const failure = `Sorry, that did not send. Please email us at ${SITE.privacyEmail}.`;
+---
+
+<Base
+  title="Start a confidential conversation | Salgotra Capital"
+  description="Whether you are ready now or simply thinking ahead, we would be glad to hear from you. Everything you share stays private."
+>
+  <PageHead
+    eyebrow="Contact"
+    title="Start a confidential conversation."
+  >
+    <p class="lede">
+      Whether you are ready now or simply thinking ahead, we would be glad to hear from you. Everything you share
+      stays private, as set out in our <a href="/privacy/">privacy policy</a>.
+    </p>
+  </PageHead>
+
+  <section class="section on-light grain grain--both contact" aria-label="Contact form and details">
+    <div class="container contact__grid">
+      <div class="contact__form-wrap">
+        <form
+          class="enquiry"
+          name={SITE.form.name}
+          method="POST"
+          action={isNetlify ? '/contact/sent/' : SITE.form.endpoint}
+          data-endpoint={isNetlify ? '/' : SITE.form.endpoint}
+          data-provider={SITE.form.provider}
+          data-netlify={isNetlify ? 'true' : undefined}
+          netlify-honeypot={isNetlify ? 'bot-field' : undefined}
+          novalidate
+        >
+          {isNetlify && <input type="hidden" name="form-name" value={SITE.form.name} />}
+          <p class="honeypot" aria-hidden="true">
+            <label>Leave this field empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+          </p>
+
+          <div class="field">
+            <label for="f-name">Name <span class="req">(required)</span></label>
+            <input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="f-name-err" />
+            <p class="field__error" id="f-name-err" data-msg="Please enter your name." hidden></p>
+          </div>
+
+          <div class="field">
+            <label for="f-business">Business name</label>
+            <input id="f-business" name="business" type="text" autocomplete="organization" />
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="f-city">City</label>
+              <input id="f-city" name="city" type="text" autocomplete="address-level2" />
+            </div>
+            <div class="field">
+              <label for="f-phone">Phone</label>
+              <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="f-email">Email <span class="req">(required)</span></label>
+            <input
+              id="f-email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              inputmode="email"
+              spellcheck="false"
+              required
+              aria-describedby="f-email-err"
+            />
+            <p
+              class="field__error"
+              id="f-email-err"
+              data-msg="Please enter your email address."
+              data-msg-invalid="Please check your email address."
+              hidden
+            >
+            </p>
+          </div>
+
+          <div class="field">
+            <label for="f-message">Tell us a little about your business (optional)</label>
+            <textarea id="f-message" name="message" rows="6"></textarea>
+          </div>
+
+          <div class="field field--check">
+            <input id="f-consent" name="consent" type="checkbox" value="yes" required aria-describedby="f-consent-err" />
+            <label for="f-consent">
+              I agree that Salgotra Capital may use these details only to respond to my enquiry. (<a href="/privacy/"
+                >privacy policy</a
+              >)
+            </label>
+            <p class="field__error" id="f-consent-err" data-msg="Please tick this box so that we can reply to you." hidden>
+            </p>
+          </div>
+
+          <div class="enquiry__actions">
+            <button class="button" type="submit" data-label="Send in confidence">Send in confidence</button>
+          </div>
+          <p class="enquiry__failure" role="alert" hidden>{failure}</p>
+        </form>
+
+        <div class="enquiry__thanks" tabindex="-1" hidden>
+          <hr class="rule" />
+          <p>{thanks}</p>
+        </div>
+      </div>
+
+      <aside class="contact__direct" aria-labelledby="direct-title">
+        <h2 id="direct-title" class="eyebrow direct-label">Direct contact</h2>
+        <ul role="list">
+          {
+            SITE.contacts.map((c) => (
+              <li>
+                <span class="direct__name">{c.name}</span>
+                <a href={`mailto:${c.email}`}>{c.email}</a>
+              </li>
+            ))
+          }
+          {
+            phone && (
+              <li>
+                <span class="direct__name">Phone</span>
+                <a href={`tel:${phoneHref}`}>{phone}</a>
+              </li>
+            )
+          }
+        </ul>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .contact__grid {
+    display: grid;
+    gap: 3.5rem clamp(3rem, 7vw, 6rem);
+    align-items: start;
+  }
+  @media (min-width: 60rem) {
+    .contact__grid {
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    }
+  }
+  .contact__form-wrap,
+  .contact__direct {
+    background: var(--cream);
+    box-shadow: 0 0 2.5rem 1.5rem var(--cream);
+  }
+
+  /* ---------- Form ---------- */
+  .enquiry {
+    display: grid;
+    gap: 1.6rem;
+    max-width: 40rem;
+  }
+  .field {
+    display: grid;
+    gap: 0.45rem;
+  }
+  .field-row {
+    display: grid;
+    gap: 1.6rem;
+  }
+  @media (min-width: 36rem) {
+    .field-row {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  label {
+    color: var(--ink);
+    font-size: 1.0625rem;
+  }
+  .req {
+    color: var(--ink-soft);
+    font-style: italic;
+    font-size: 1rem;
+  }
+  input[type='text'],
+  input[type='email'],
+  input[type='tel'],
+  textarea {
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid #8a7f6c; /* 3.2:1 against Cream, for a visible field edge */
+    border-radius: 0;
+    background: #f3efe6;
+    color: var(--ink);
+    font-size: 1.0625rem; /* at least 16px, so phones do not zoom in */
+    line-height: 1.5;
+    scroll-margin-block: 6rem 40vh;
+    transition:
+      border-color var(--fast) var(--ease),
+      background-color var(--fast) var(--ease);
+  }
+  textarea {
+    resize: vertical;
+    min-height: 9rem;
+  }
+  input:hover,
+  textarea:hover {
+    border-color: var(--umber);
+  }
+  input:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid var(--bronze);
+    outline-offset: 1px;
+    border-color: var(--umber);
+    background: #f8f5ee;
+  }
+  input[aria-invalid='true'],
+  textarea[aria-invalid='true'] {
+    border-color: var(--burgundy);
+  }
+  .field__error {
+    color: var(--burgundy);
+    font-size: 1rem;
+  }
+
+  .field--check {
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    gap: 0.4rem 0.9rem;
+  }
+  .field--check input {
+    appearance: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-top: 0.2rem;
+    border: 1px solid #8a7f6c;
+    background: #f3efe6;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    /* enlarge the tap target without enlarging the box */
+    box-shadow: 0 0 0 0.6rem transparent;
+  }
+  .field--check input::after {
+    content: '';
+    width: 0.45rem;
+    height: 0.8rem;
+    border: solid var(--ivory);
+    border-width: 0 2px 2px 0;
+    transform: translateY(-1px) rotate(45deg);
+    opacity: 0;
+  }
+  .field--check input:checked {
+    background: var(--midnight);
+    border-color: var(--midnight);
+  }
+  .field--check input:checked::after {
+    opacity: 1;
+  }
+  .field--check input[aria-invalid='true'] {
+    border-color: var(--burgundy);
+  }
+  .field--check label {
+    cursor: pointer;
+    line-height: 1.5;
+    padding-block: 0.1rem;
+  }
+  .field--check .field__error {
+    grid-column: 2;
+  }
+
+  .enquiry__actions {
+    padding-top: 0.5rem;
+  }
+  .enquiry__actions .button {
+    min-width: 14rem;
+  }
+  .enquiry__failure {
+    color: var(--ink);
+    border-left: 2px solid var(--burgundy);
+    padding: 0.3rem 0 0.3rem 1rem;
+  }
+  .honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  .enquiry__thanks p {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 1.3rem + 0.8vw, 1.9rem);
+    line-height: 1.35;
+    color: var(--ink);
+    max-width: 32rem;
+  }
+  .enquiry__thanks .rule {
+    margin-top: 0;
+  }
+  .enquiry__thanks:focus {
+    outline: none;
+  }
+
+  /* ---------- Direct contact ---------- */
+  .direct-label {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  .contact__direct ul {
+    list-style: none;
+    padding: 0;
+    border-top: 1px solid var(--bronze);
+  }
+  .contact__direct li {
+    display: grid;
+    padding-block: 1rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--umber) 22%, transparent);
+  }
+  .direct__name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: var(--ink);
+  }
+  .contact__direct a {
+    display: inline-block;
+    padding-block: 0.5rem;
+    overflow-wrap: anywhere;
+  }
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('form.enquiry');
+  if (form) {
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const failure = form.querySelector<HTMLElement>('.enquiry__failure')!;
+    const thanks = document.querySelector<HTMLElement>('.enquiry__thanks')!;
+    const fields = Array.from(form.querySelectorAll<HTMLInputElement>('input[required]'));
+    let sending = false;
+
+    const showError = (input: HTMLInputElement) => {
+      const err = document.getElementById(`${input.id}-err`);
+      if (!err) return true;
+      let msg = '';
+      if (input.type === 'checkbox') msg = input.checked ? '' : err.dataset.msg!;
+      else if (!input.value.trim()) msg = err.dataset.msg!;
+      else if (input.validity.typeMismatch) msg = err.dataset.msgInvalid ?? err.dataset.msg!;
+      err.textContent = msg;
+      err.hidden = !msg;
+      input.setAttribute('aria-invalid', msg ? 'true' : 'false');
+      return !msg;
+    };
+
+    fields.forEach((input) => {
+      const evt = input.type === 'checkbox' ? 'change' : 'blur';
+      input.addEventListener(evt, () => {
+        if (input.getAttribute('aria-invalid') === 'true' || input.type !== 'checkbox') showError(input);
+      });
+    });
+
+    // On phones, keep the field being typed in above the on-screen keyboard.
+    const vv = window.visualViewport;
+    if (vv && matchMedia('(pointer: coarse)').matches) {
+      form.addEventListener('focusin', (e) => {
+        const el = e.target as HTMLElement;
+        if (!el.matches('input:not([type="checkbox"]), textarea')) return;
+        setTimeout(() => {
+          const r = el.getBoundingClientRect();
+          if (r.bottom > vv.height - 16 || r.top < 0) el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        }, 350);
+      });
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (sending) return;
+      failure.hidden = true;
+
+      const invalid = fields.filter((f) => !showError(f));
+      if (invalid.length) {
+        invalid[0].focus();
+        return;
+      }
+
+      sending = true;
+      button.disabled = true;
+      button.textContent = 'Sending…';
+
+      const data = new FormData(form);
+      const provider = form.dataset.provider;
+      try {
+        const res =
+          provider === 'netlify'
+            ? await fetch(form.dataset.endpoint || '/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams(data as unknown as Record<string, string>).toString(),
+              })
+            : await fetch(form.dataset.endpoint!, {
+                method: 'POST',
+                headers: { Accept: 'application/json' },
+                body: data,
+              });
+        if (!res.ok) throw new Error('not ok');
+        form.hidden = true;
+        thanks.hidden = false;
+        thanks.focus();
+      } catch {
+        failure.hidden = false;
+        sending = false;
+        button.disabled = false;
+        button.textContent = button.dataset.label || 'Send in confidence';
+      }
+    });
+  }
+</script>
