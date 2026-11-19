@@ -1,6 +1,7 @@
 ---
 /*
- * DRAFT: to be reviewed by our lawyer before launch.
+ * DRAFT: to be reviewed by our lawyer before launch. Retention period (24 months) and response time (30 days)
+ * to be confirmed.
  *
  * Written in plain English with India's Digital Personal Data Protection Act, 2023 in mind.
  * This note is a code comment only and does not appear on the live page.
@@ -32,8 +33,9 @@ const email = SITE.privacyEmail;
         <h2>What we collect</h2>
         <p>We only collect what you choose to give us through the contact form:</p>
         <ul>
-          <li>your name and email address (required);</li>
-          <li>your business name, city and phone number (optional);</li>
+          <li>your name (required);</li>
+          <li>a phone number or an email address, at least one of which is required;</li>
+          <li>your business name and city (optional);</li>
           <li>anything you write about your business (optional);</li>
           <li>your agreement that we may use these details to reply to you.</li>
         </ul>
@@ -65,7 +67,7 @@ const email = SITE.privacyEmail;
           We may also disclose details if the law requires it.
         </p>
         <p>
-          If our conversation develops and you want us to involve our chartered accountants or lawyers, we will only
+          If our conversation develops and you want us to involve independent chartered accountants or lawyers, we will only
           do so with your knowledge and under a duty of confidentiality.
         </p>
 
@@ -92,7 +94,7 @@ const email = SITE.privacyEmail;
           <li>name another person to exercise these rights for you in the event of death or incapacity.</li>
         </ul>
         <p>
-          To make any of these requests, or to raise a concern, email <a href={`mailto:${email}`}>{email}</a>. We
+          To make any of these requests, or if you have a concern, email <a href={`mailto:${email}`}>{email}</a>. We
           will reply as soon as we can, and in any case within 30 days. If you are not satisfied with our response,
           you may complain to the Data Protection Board of India.
         </p>
