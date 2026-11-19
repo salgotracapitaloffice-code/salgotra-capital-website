@@ -1,0 +1,86 @@
+---
+import { SITE } from '../site.config.mjs';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__top">
+      <p class="site-footer__name">
+        <span class="site-footer__brand">{SITE.name}</span>
+        <span class="site-footer__tagline">{SITE.tagline}</span>
+      </p>
+      <p class="site-footer__place">{SITE.location}</p>
+    </div>
+    <div class="site-footer__bottom">
+      <p>
+        &copy; <span data-year>{year}</span> {SITE.name}. All rights reserved.
+        <span aria-hidden="true" class="sep">&middot;</span>
+        <a href="/privacy/">Privacy policy</a>
+      </p>
+      <p class="site-footer__small">
+        Salgotra Capital does not offer securities or investment products to the public.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script is:inline>
+  // Keep the copyright year current even between rebuilds.
+  document.querySelectorAll('[data-year]').forEach((el) => (el.textContent = String(new Date().getFullYear())));
+</script>
+
+<style>
+  .site-footer {
+    background: var(--midnight);
+    color: var(--ivory-soft);
+    padding-block: 3.5rem 2.5rem;
+    border-top: 1px solid color-mix(in srgb, var(--champagne) 30%, transparent);
+    font-size: 1rem;
+  }
+  .site-footer__top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--ivory) 12%, transparent);
+  }
+  .site-footer__name {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 1rem;
+  }
+  .site-footer__brand {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: var(--ivory);
+  }
+  .site-footer__tagline {
+    font-style: italic;
+  }
+  .site-footer__place {
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--champagne);
+  }
+  .site-footer__bottom {
+    padding-top: 1.5rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .site-footer a {
+    display: inline-block;
+    padding-block: 0.6rem;
+  }
+  .sep {
+    margin-inline: 0.5rem;
+  }
+  .site-footer__small {
+    font-size: 1rem;
+    color: var(--ivory-soft);
+  }
+</style>

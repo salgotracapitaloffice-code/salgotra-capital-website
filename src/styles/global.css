@@ -1,0 +1,444 @@
+/* Salgotra Capital: global styles
+   One fixed theme. Dark sections (Midnight, Moss, Onyx) alternate with Cream sections.
+   Every text/background pair below is checked to WCAG AA (see README). */
+
+:root {
+  /* Palette, sampled from palette.png and grain.jpg */
+  --midnight: #19212c;
+  --onyx: #050505;
+  --moss: #263123;
+  --umber: #2c1f16;
+  --burgundy: #541718;
+  --champagne: #ae906b;
+  --ivory: #d6cca8;
+  --cream: #e8e2d4;
+  --ink: #1b1b18;
+  /* Darker champagne for small text and links on Cream (Champagne itself is only 2:1 there) */
+  --bronze: #6b573e;
+  /* Secondary text */
+  --ivory-soft: #bdb497; /* on Midnight 7.8:1, on Moss 6.6:1 */
+  --ink-soft: #3d3a33; /* on Cream 8.8:1 */
+
+  --font-display: 'Cormorant Garamond', 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+  --font-body: 'EB Garamond', 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+
+  --measure: 42.5rem; /* ~680px reading width */
+  --wide: 68.75rem; /* ~1100px layout width */
+  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+  --space-section: clamp(4rem, 9vw, 7.5rem);
+
+  --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --fast: 180ms;
+
+}
+
+/* ---------- Reset ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+}
+[hidden] {
+  display: none !important;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: 6rem;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+body {
+  min-height: 100vh;
+  background: var(--midnight);
+  color: var(--ivory);
+  font-family: var(--font-body);
+  font-size: 1.0625rem; /* 17px on small screens */
+  line-height: 1.6;
+  font-kerning: normal;
+  font-variant-ligatures: common-ligatures;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+@media (min-width: 48rem) {
+  body {
+    font-size: 1.1875rem; /* 19px: EB Garamond runs small, so this reads like 18px */
+  }
+}
+img,
+picture,
+svg {
+  display: block;
+  max-width: 100%;
+}
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+p,
+li,
+dd,
+h1,
+h2,
+h3 {
+  overflow-wrap: break-word;
+}
+
+/* ---------- Type ---------- */
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: 0.005em;
+  text-wrap: balance;
+}
+h1 {
+  font-size: clamp(2.5rem, 1.6rem + 3.6vw, 4.25rem);
+}
+h2 {
+  font-size: clamp(2rem, 1.5rem + 1.9vw, 2.9rem);
+}
+h3 {
+  font-size: clamp(1.45rem, 1.3rem + 0.5vw, 1.7rem);
+  line-height: 1.2;
+}
+.lede {
+  font-size: clamp(1.2rem, 1.1rem + 0.45vw, 1.4rem);
+  line-height: 1.55;
+}
+em,
+.accent {
+  font-style: italic;
+}
+
+/* Small label: letter-spaced capitals in Champagne */
+.eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--champagne);
+  margin-bottom: 1.1rem;
+}
+.on-light .eyebrow {
+  color: var(--bronze);
+}
+
+/* ---------- Links and focus ---------- */
+a {
+  color: var(--champagne);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+  transition:
+    color var(--fast) var(--ease),
+    text-decoration-color var(--fast) var(--ease);
+}
+a:hover {
+  color: var(--ivory);
+  text-decoration-color: currentColor;
+}
+.on-light a {
+  color: var(--bronze);
+}
+.on-light a:hover {
+  color: var(--burgundy);
+}
+a:active {
+  opacity: 0.8;
+}
+
+:focus-visible {
+  outline: 2px solid var(--champagne);
+  outline-offset: 3px;
+}
+.on-light :focus-visible {
+  outline-color: var(--bronze);
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -10rem;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  background: var(--ivory);
+  color: var(--ink);
+  text-decoration: none;
+}
+.skip-link:focus {
+  top: 1rem;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- Buttons ---------- */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  min-height: 3rem;
+  padding: 0.7rem 1.6rem;
+  border: 1px solid var(--champagne);
+  border-radius: 0;
+  background: var(--champagne);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--fast) var(--ease),
+    color var(--fast) var(--ease),
+    border-color var(--fast) var(--ease);
+}
+.button:hover {
+  background: var(--ivory);
+  border-color: var(--ivory);
+  color: var(--ink);
+}
+.button:active {
+  background: #c9bd97;
+  border-color: #c9bd97;
+}
+.button--quiet {
+  background: transparent;
+  color: var(--champagne);
+}
+.button--quiet:hover {
+  background: transparent;
+  color: var(--ivory);
+  border-color: var(--ivory);
+}
+.on-light .button {
+  background: var(--midnight);
+  border-color: var(--midnight);
+  color: var(--ivory);
+}
+.on-light .button:hover {
+  background: var(--burgundy);
+  border-color: var(--burgundy);
+  color: var(--cream);
+}
+.button[disabled] {
+  cursor: progress;
+  opacity: 0.75;
+}
+
+/* ---------- Layout ---------- */
+.container {
+  width: min(100% - 2 * var(--gutter), var(--wide));
+  margin-inline: auto;
+}
+.measure {
+  max-width: var(--measure);
+}
+.center {
+  margin-inline: auto;
+}
+.section {
+  position: relative;
+  padding-block: var(--space-section);
+}
+.section--tight {
+  padding-block: clamp(3rem, 6vw, 5rem);
+}
+.stack > * + * {
+  margin-top: 1.25em;
+}
+.stack-lg > * + * {
+  margin-top: 2rem;
+}
+
+/* Section colour schemes */
+.bg-midnight {
+  background: var(--midnight);
+  color: var(--ivory);
+}
+.bg-onyx {
+  background: var(--onyx);
+  color: var(--ivory);
+}
+.bg-moss {
+  background: var(--moss);
+  color: var(--ivory);
+}
+.bg-umber {
+  background: var(--umber);
+  color: var(--ivory);
+}
+.bg-cream,
+.on-light {
+  background: var(--cream);
+  color: var(--ink);
+}
+
+/* Hairline rules, like a printed annual report */
+.rule {
+  display: block;
+  width: 4.5rem;
+  height: 1px;
+  border: 0;
+  background: var(--champagne);
+  margin-block: 2rem;
+}
+.rule--burgundy {
+  background: var(--burgundy);
+}
+.on-light .rule {
+  background: var(--bronze);
+}
+.hairline-top {
+  border-top: 1px solid color-mix(in srgb, var(--champagne) 35%, transparent);
+}
+.on-light.hairline-top,
+.on-light .hairline-top {
+  border-top-color: color-mix(in srgb, var(--umber) 22%, transparent);
+}
+
+/* ---------- Grain texture (growth rings) ----------
+   A cleaned trace of grain.jpg in Umber, shown at very low opacity.
+   The mask keeps the lines to the edges so text never sits on them. */
+.grain {
+  position: relative;
+  isolation: isolate;
+}
+.grain::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: url('/images/grain-lines.webp');
+  background-repeat: repeat-y;
+  background-size: min(46rem, 90%) auto;
+  background-position: 108% 0;
+  opacity: 0.1;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 52%, #000 82%);
+  mask-image: linear-gradient(90deg, transparent 0%, transparent 52%, #000 82%);
+}
+.grain--left::before {
+  background-position: -8% 30%;
+  transform: scaleX(-1);
+}
+.grain--both::before {
+  background-image: url('/images/grain-lines.webp'), url('/images/grain-lines.webp');
+  background-repeat: no-repeat, no-repeat;
+  background-size: 34rem auto, 34rem auto;
+  background-position: calc(100% + 16rem) -6rem, -16rem 60%;
+  opacity: 0.09;
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, transparent 24%, transparent 76%, #000 100%);
+  mask-image: linear-gradient(90deg, #000 0%, transparent 24%, transparent 76%, #000 100%);
+}
+@media (max-width: 47.99rem) {
+  .grain::before {
+    background-size: 30rem auto;
+    background-position: calc(100% + 18rem) 0;
+    opacity: 0.08;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 70%, #000 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, transparent 70%, #000 100%);
+  }
+}
+
+/* A thin decorative band of growth rings between major sections */
+.grain-band {
+  height: 3.5rem;
+  background-color: var(--cream);
+  background-image: url('/images/grain-lines.webp');
+  background-size: 40rem auto;
+  background-position: center 38%;
+  position: relative;
+}
+.grain-band::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--cream) 88%, transparent);
+}
+
+/* ---------- Reveal on scroll (only when JS is running) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity 900ms var(--ease),
+      transform 900ms var(--ease);
+  }
+  .js .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- Page header for inner pages ---------- */
+.page-head {
+  position: relative;
+  padding-block: clamp(4rem, 9vw, 7rem) clamp(3rem, 6vw, 5rem);
+  overflow: hidden;
+}
+.page-head h1 {
+  max-width: 18ch;
+}
+.page-head .lede {
+  margin-top: 1.5rem;
+  max-width: var(--measure);
+  color: var(--ivory-soft);
+}
+
+/* ---------- Closing call-to-action band ---------- */
+.cta-band {
+  text-align: center;
+}
+.cta-band p {
+  margin-inline: auto;
+  max-width: 36rem;
+}
+.cta-band .button {
+  margin-top: 2.25rem;
+}
+
+/* ---------- Print ---------- */
+@media print {
+  .site-header nav,
+  .site-footer,
+  .hero__media {
+    display: none !important;
+  }
+  body,
+  .bg-midnight,
+  .bg-moss,
+  .bg-onyx {
+    background: #fff !important;
+    color: #000 !important;
+  }
+}
