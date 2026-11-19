@@ -36,7 +36,10 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
           ))
         }
       </ul>
-      <a class="button button--quiet site-nav__cta" href="/contact/">Start a conversation</a>
+      <a class="button site-nav__cta" href="/contact/">
+        <span class="cta-long">Start a confidential conversation</span>
+        <span class="cta-short">Start a conversation</span>
+      </a>
     </nav>
   </div>
 </header>
@@ -44,7 +47,7 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
 <style>
   .site-header {
     position: relative;
-    z-index: 20;
+    z-index: 40;
     background: var(--midnight);
     border-bottom: 1px solid color-mix(in srgb, var(--champagne) 22%, transparent);
   }
@@ -54,7 +57,8 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 2rem;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
     min-height: 5.25rem;
   }
   .site-header__logo {
@@ -63,18 +67,20 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
     padding-block: 0.5rem;
   }
   .site-header__logo img {
-    width: clamp(10.5rem, 8rem + 6vw, 13rem);
+    /* capped by screen width so large phone text never pushes the menu button off-screen */
+    width: min(clamp(10rem, 7rem + 5vw, 12.5rem), 46vw);
     height: auto;
   }
 
+  /* ---------- Desktop: five links and one button ---------- */
   .site-nav {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1.5rem;
   }
   .site-nav ul {
     display: flex;
-    gap: 1.6rem;
+    gap: 1.25rem;
     list-style: none;
     padding: 0;
   }
@@ -84,6 +90,7 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
     min-height: 2.75rem;
     color: var(--ivory);
     font-size: 1.0625rem;
+    white-space: nowrap;
     text-decoration-color: transparent;
     text-underline-offset: 0.35em;
   }
@@ -95,11 +102,29 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
     text-decoration-color: var(--champagne);
   }
   .site-nav__cta {
-    min-height: 2.75rem;
-    padding-inline: 1.15rem;
-    font-size: 1rem;
+    white-space: nowrap;
+    padding-inline: 1.2rem;
+  }
+  .cta-short {
+    display: none;
+  }
+  /* Between 1024 and 1200px there is only room for the shorter wording */
+  @media (min-width: 64rem) and (max-width: 74.99rem) {
+    .cta-long {
+      display: none;
+    }
+    .cta-short {
+      display: inline;
+    }
+    .site-nav ul {
+      gap: 1rem;
+    }
+    .site-nav ul a {
+      font-size: 1rem;
+    }
   }
 
+  /* ---------- Menu toggle (below 1024px) ---------- */
   .menu-toggle {
     display: none;
     align-items: center;
@@ -141,55 +166,62 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
     transform: translateY(-6px) rotate(-90deg);
   }
 
-  @media (max-width: 71.99rem) {
+  /* ---------- Mobile and tablet: full-height panel ---------- */
+  @media (max-width: 63.99rem) {
     .menu-toggle {
       display: inline-flex;
+      position: relative;
+      z-index: 2;
     }
     .site-nav {
       display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
+      position: fixed;
+      inset: 0;
+      z-index: 1;
       flex-direction: column;
       align-items: stretch;
-      gap: 1.5rem;
-      padding: 1rem var(--gutter) 2rem;
+      gap: 2rem;
+      padding: calc(5.25rem + 1.5rem) var(--gutter) 2.5rem;
       background: var(--midnight);
-      border-bottom: 1px solid color-mix(in srgb, var(--champagne) 30%, transparent);
+      overflow-y: auto;
+      overscroll-behavior: contain;
     }
     .site-nav.is-open {
       display: flex;
     }
+    .site-header__logo {
+      position: relative;
+      z-index: 2;
+    }
     .site-nav ul {
       flex-direction: column;
       gap: 0;
+      border-top: 1px solid color-mix(in srgb, var(--champagne) 30%, transparent);
     }
-    .site-nav ul li + li {
-      border-top: 1px solid color-mix(in srgb, var(--ivory) 10%, transparent);
+    .site-nav ul li {
+      border-bottom: 1px solid color-mix(in srgb, var(--ivory) 12%, transparent);
     }
     .site-nav ul a {
       display: flex;
-      min-height: 3.25rem;
-      font-size: 1.25rem;
+      min-height: 3.5rem;
+      font-size: 1.5rem;
       font-family: var(--font-display);
       font-weight: 600;
+      white-space: normal;
     }
     .site-nav__cta {
-      min-height: 3rem;
-      font-size: 1.0625rem;
+      white-space: normal;
     }
   }
   /* Without JavaScript, show the links in a simple wrapped row */
   :global(html:not(.js)) .menu-toggle {
     display: none;
   }
-  @media (max-width: 71.99rem) {
+  @media (max-width: 63.99rem) {
     :global(html:not(.js)) .site-nav {
       display: flex;
       position: static;
-      padding: 0 0 1rem;
-      border: 0;
+      padding: 0 0 1.5rem;
     }
     :global(html:not(.js)) .site-header__inner {
       flex-wrap: wrap;
@@ -202,18 +234,26 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
   const nav = document.getElementById('site-nav');
   if (toggle && nav) {
     const label = toggle.querySelector('.menu-toggle__label');
-    const set = (open: boolean) => {
+    // Everything outside the header is made inert while the menu is open
+    const outside = () => document.querySelectorAll<HTMLElement>('body > :not(.site-header)');
+
+    const set = (open: boolean, returnFocus = false) => {
       toggle.setAttribute('aria-expanded', String(open));
       nav.classList.toggle('is-open', open);
+      document.documentElement.classList.toggle('menu-open', open);
+      outside().forEach((el) => (el.inert = open));
       if (label) label.textContent = open ? 'Close' : 'Menu';
+      if (open) nav.querySelector<HTMLAnchorElement>('a')?.focus();
+      else if (returnFocus) toggle.focus();
     };
-    toggle.addEventListener('click', () => set(toggle.getAttribute('aria-expanded') !== 'true'));
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && nav.classList.contains('is-open')) {
-        set(false);
-        toggle.focus();
-      }
+
+    toggle.addEventListener('click', () => set(toggle.getAttribute('aria-expanded') !== 'true', true));
+    nav.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('a') && nav.classList.contains('is-open')) set(false);
     });
-    window.matchMedia('(min-width: 72rem)').addEventListener('change', (e) => e.matches && set(false));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && nav.classList.contains('is-open')) set(false, true);
+    });
+    window.matchMedia('(min-width: 64rem)').addEventListener('change', (e) => e.matches && set(false));
   }
 </script>
